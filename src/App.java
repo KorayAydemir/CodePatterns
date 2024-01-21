@@ -3,42 +3,36 @@ package src;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-public class Learn {
+public class App {
     private static final JFrame frame = new JFrame("Hello, World!");
+    private static final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
 
-    public Learn() {
+    public App() {
         createAndShowGUI(frame);
     }
 
-    public void addComponentsToPane(JFrame frame) {
-        JPanel newPage = new JPanel();
-        newPage.add(new JButton("new page"));
+    public void addTab(TabPage page) {
+        tabbedPane.addTab(page.getTitle(), page.getIcon(), page.getPane(), page.getTooltip());
+        tabbedPane.setSelectedComponent(page.getPane());
+    }
 
-        JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
-
-        JPanel page1 = new JPanel();
-        page1.add(new JButton("p1 content"));
-
-        tabbedPane.addTab("new tab", null, newPage, "New Tba");
-        tabbedPane.setSelectedComponent(newPage);
+    private void addComponentsToPane(JFrame frame) {
         frame.add(tabbedPane);
     }
 
-    public void createAndShowGUI(JFrame frame) {
+    private void createAndShowGUI(JFrame frame) {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         frame.setLayout(new BorderLayout());
+        makeFrameFullScreen(frame);
 
         addComponentsToPane(frame);
 
-        makeFrameFullScreen(frame);
 
         frame.setVisible(true);
+
     }
 
     private void makeFrameFullScreen(JFrame frame) {

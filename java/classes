@@ -1,1 +1,1 @@
-src.Main src.Learn
+src.EntryFrame src.App src.LearningCardsPage src.Page src.TabPage
