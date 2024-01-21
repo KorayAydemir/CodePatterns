@@ -13,16 +13,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-public class Main extends JFrame {
+public class Main {
+    private static final JFrame frame = new JFrame("Hello, World!");
+
     public Main () {
-        super("Hello, World!");
+        createAndShowGUI(frame);
     }
 
-    // maybe utilize builder pattern somewhere
     private static JButton createButton(String text, String tooltip, ImageIcon icon, ActionListener listener) {
         JButton button = new JButton(text);
         button.setMaximumSize(new Dimension(240, 80));
-        // startButton.putClientProperty("JComponent.sizeVariant", "mini");
 
         button.addActionListener(listener);
 
@@ -32,16 +32,16 @@ public class Main extends JFrame {
         return button;
     }
 
-    private void addComponentsToPane() {
-        final Container pane = getContentPane();
+    private void addComponentsToPane(JFrame frame) {
+        final Container pane = frame.getContentPane();
 
         JPanel buttonsContainer = new JPanel();
         buttonsContainer.setLayout(new BoxLayout(buttonsContainer, BoxLayout.Y_AXIS));
         buttonsContainer.setPreferredSize(new Dimension(200, 200));
 
         ActionListener buttonAction = e -> {
-            new Learn().createAndShowGUI();
-            dispose();
+            new Learn();
+            frame.dispose();
         };
 
         final JButton startButton = createButton("Start learning", null, new ImageIcon("src/assets/book.224x256.png"), buttonAction);
@@ -54,19 +54,19 @@ public class Main extends JFrame {
         pane.add(buttonsContainer);
     }
 
-    private void createAndShowGUI() {
-        setSize(new Dimension(640, 480));
-        setLayout(new GridBagLayout());
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    private void createAndShowGUI(JFrame frame) {
+        frame.setSize(new Dimension(640, 480));
+        frame.setLayout(new GridBagLayout());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        addComponentsToPane();
+        addComponentsToPane(frame);
 
-        setVisible(true);
+        frame.setVisible(true);
     }
 
     public static void main(String... args) {
         SwingUtilities.invokeLater(() -> {
-            new Main().createAndShowGUI();
+            new Main();
         });
     }
 }

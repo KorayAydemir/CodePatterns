@@ -1,19 +1,21 @@
 package src;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-public class Learn extends JFrame {
+public class Learn {
+    private static final JFrame frame = new JFrame("Hello, World!");
+
     public Learn() {
-        super("Learn");
+        createAndShowGUI(frame);
     }
 
-    public void addComponentsToPane() {
+    public void addComponentsToPane(JFrame frame) {
         JPanel newPage = new JPanel();
         newPage.add(new JButton("new page"));
 
@@ -24,20 +26,19 @@ public class Learn extends JFrame {
 
         tabbedPane.addTab("new tab", null, newPage, "New Tba");
         tabbedPane.setSelectedComponent(newPage);
-        add(tabbedPane);
+        frame.add(tabbedPane);
     }
 
-    public void createAndShowGUI() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public void createAndShowGUI(JFrame frame) {
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        makeFrameFullScreen(this);
+        frame.setLayout(new BorderLayout());
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridBagLayout());
+        addComponentsToPane(frame);
 
-        addComponentsToPane();
+        makeFrameFullScreen(frame);
 
-        setVisible(true);
+        frame.setVisible(true);
     }
 
     private void makeFrameFullScreen(JFrame frame) {
