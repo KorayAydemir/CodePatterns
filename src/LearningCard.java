@@ -21,10 +21,10 @@ import javax.swing.JPanel;
 public class LearningCard {
     final JButton editButton = new JButton();
     final JPanel component = new JPanel(new GridBagLayout());
-    final LearningCardPage pageToOpen;
+    final LearningCardTab tabToOpen;
 
-    public LearningCard(String title, String desc, String tooltip, LearningCardPage pageToOpen) {
-        this.pageToOpen = pageToOpen;
+    public LearningCard(String title, String desc, String tooltip, LearningCardTab tabToOpen) {
+        this.tabToOpen = tabToOpen;
         setUpCard();
 
         setUpButton();
@@ -107,7 +107,7 @@ public class LearningCard {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            App.getInstance().addTab(pageToOpen); 
+            App.getInstance().addTab(tabToOpen); 
         }
 
         @Override

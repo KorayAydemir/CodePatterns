@@ -37,7 +37,6 @@ public class EntryFrame {
 
     private void addComponentsToPane(JFrame frame) {
         JPanel buttons = createButtons();
-
         frame.getContentPane().add(buttons);
     }
 

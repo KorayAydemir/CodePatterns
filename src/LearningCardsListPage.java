@@ -77,8 +77,8 @@ class LearningCards {
                 String cardTooltip = cardObj.getString("tooltip");
 
 
-                LearningCardPage learningCardPage = new LearningCardPage(pageTitle, pageBody, cardTitle, cardDesc, cardTooltip);
-                LearningCard card = new LearningCard(cardTitle, cardDesc, cardTooltip, learningCardPage);
+                LearningCardTab learningCardTab = new LearningCardTab(pageTitle, pageBody, cardTitle, cardDesc, cardTooltip);
+                LearningCard card = new LearningCard(cardTitle, cardDesc, cardTooltip, learningCardTab);
 
                 cardsContainer.add(card.component);
             }
