@@ -77,8 +77,7 @@ public class EntryFrame {
 
         public JButton getButton() {
             return createButton(buttonText, null, (e) -> {
-                App.getInstance();
-                App.addTab(page);
+                App.getInstance().addTab(page);
 
                 frame.dispose();
             });

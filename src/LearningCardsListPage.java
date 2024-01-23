@@ -69,7 +69,17 @@ class LearningCards {
                 JSONObject learningPageObj = jsonArray.getJSONObject(i);
                 JSONObject cardObj = learningPageObj.getJSONObject("card");
 
-                var card = new LearningCardPage(learningPageObj.getString("title"), cardObj.getString("tooltip"), cardObj.getString("desc")).card;
+                String pageTitle = learningPageObj.getString("title");
+                String pageBody = learningPageObj.getString("body");
+
+                String cardTitle = cardObj.getString("title");
+                String cardDesc = cardObj.getString("desc");
+                String cardTooltip = cardObj.getString("tooltip");
+
+
+                LearningCardPage learningCardPage = new LearningCardPage(pageTitle, pageBody, cardTitle, cardDesc, cardTooltip);
+                LearningCard card = new LearningCard(cardTitle, cardDesc, cardTooltip, learningCardPage);
+
                 cardsContainer.add(card.component);
             }
         } catch (Exception e) {

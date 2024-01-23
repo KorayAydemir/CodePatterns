@@ -27,7 +27,7 @@ public class App {
         return single_instance;
     }
 
-    public static void addTab(TabPage page) {
+    public void addTab(TabPage page) {
         tabbedPane.addTab(page.title, page.icon, page.component);
         tabbedPane.setSelectedComponent(page.component);
     }
