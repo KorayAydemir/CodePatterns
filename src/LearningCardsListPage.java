@@ -4,12 +4,16 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class LearningCardsListPage {
@@ -58,25 +62,35 @@ class LearningCards {
     JPanel cardsContainer = new JPanel(new GridLayout(0, 5, 35, 30));
 
     public LearningCards() {
-        //var card = new LearningCard("title", "tooltip tooltip tooltip tooltip tooltip tooltip ", "contentPreview");
-        //var card2 = new LearningCard("title3", "tooltip tooltip tooltip ", "contentPreview");
-        //var card3 = new LearningCard("title4", "tooltip tooltip tooltip tooltip tooltip tooltip ", "contentPreview");
-        //var card4 = new LearningCard("title5", "tooltip tooltip tooltip tooltip tooltip tooltip ", "contentPreview");
-        //var card5 = new LearningCard("title6", "tooltip tooltip tooltip tooltip tooltip tooltip ", "contentPreview");
-        //var card6 = new LearningCard("title7", "tooltip tooltip tooltip tooltip tooltip tooltip ", "contentPreview");
-        //var card7 = new LearningCard("title8", "tooltip tooltip tooltip tooltip tooltip tooltip ", "contentPreview");
-        //var card8 = new LearningCard("title9", "tooltip tooltip tooltip tooltip tooltip tooltip ", "contentPreview");
+        try {
+            JSONArray jsonArray = parseJSONArrayFromFile("src/data/LearningPages.json");
 
-        //cardsContainer.add(card.component);
-        //cardsContainer.add(card2.component);
-        //cardsContainer.add(card3.component);
-        //cardsContainer.add(card4.component);
-        //cardsContainer.add(card5.component);
-        //cardsContainer.add(card6.component);
-        //cardsContainer.add(card7.component);
-        //cardsContainer.add(card8.component);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject learningPageObj = jsonArray.getJSONObject(i);
+                JSONObject cardObj = learningPageObj.getJSONObject("card");
+
+                var card = new LearningCardPage(learningPageObj.getString("title"), cardObj.getString("tooltip"), cardObj.getString("desc")).card;
+                cardsContainer.add(card.component);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
+    private JSONArray parseJSONArrayFromFile(String path) {
+        try {
+            String jsonString = new String(Files.readAllBytes(Paths.get(path)));
+            return new JSONArray(jsonString);
+        } catch (IOException io) {
+            System.out.println("File read error: " + io);
+            System.exit(1);
+            return null;
+        } catch (Exception e) {
+            System.out.println("JSON parse error: " + e);
+            System.exit(1);
+            return null;
+        }
+    }
 }
 
 class LearningCardsTab extends TabPage {
