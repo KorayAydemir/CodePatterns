@@ -28,7 +28,7 @@ public class App {
     }
 
     public static void addTab(TabPage page) {
-        tabbedPane.addTab(page.title, page.icon, page.component, page.tooltip);
+        tabbedPane.addTab(page.title, page.icon, page.component);
         tabbedPane.setSelectedComponent(page.component);
     }
 

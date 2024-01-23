@@ -47,15 +47,15 @@ public class EntryFrame {
         buttonsContainer.setPreferredSize(new Dimension(200, 200));
 
         final JButton startButton = new NavigationButton("Start Learning", new LearningCardsTab()).getButton();
-        //final JButton aboutButton = new NavigationButton("About", new ()).getButton(); // TODO IMPLEMENT
+        // final JButton aboutButton = new NavigationButton("About", new
+        // ()).getButton(); // TODO IMPLEMENT
 
         buttonsContainer.add(startButton);
         buttonsContainer.add(Box.createRigidArea(new Dimension(0, 10)));
-        //buttonsContainer.add(aboutButton); // TODO IMPLEMENT
+        // buttonsContainer.add(aboutButton); // TODO IMPLEMENT
 
         return buttonsContainer;
     }
-
 
     private class NavigationButton {
         private String buttonText;
@@ -66,20 +66,17 @@ public class EntryFrame {
             this.page = page;
         }
 
-        private static JButton createButton(String text, String tooltip, ImageIcon icon, ActionListener listener) {
+        private static JButton createButton(String text, ImageIcon icon, ActionListener listener) {
             JButton button = new JButton(text);
             button.setMaximumSize(new Dimension(240, 80));
 
             button.addActionListener(listener);
 
-            if (tooltip != null) {
-                button.setToolTipText(tooltip);
-            }
             return button;
         }
 
         public JButton getButton() {
-            return createButton(buttonText, page.tooltip, null, (e) -> {
+            return createButton(buttonText, null, (e) -> {
                 App.getInstance();
                 App.addTab(page);
 
@@ -87,6 +84,5 @@ public class EntryFrame {
             });
         }
 
-    } 
+    }
 }
-
