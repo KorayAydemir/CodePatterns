@@ -5,18 +5,21 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 
 public class App {
     private static final JFrame frame = new JFrame("Hello, World!");
     private static final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
 
     public App() {
-        createAndShowGUI(frame);
+        SwingUtilities.invokeLater(() -> {
+            createAndShowGUI(frame);
+        });
     }
 
-    public void addTab(TabPage page) {
-        tabbedPane.addTab(page.getTitle(), page.getIcon(), page.getPane(), page.getTooltip());
-        tabbedPane.setSelectedComponent(page.getPane());
+    public static void addTab(TabPage page) {
+        tabbedPane.addTab(page.title, page.icon, page.component, page.tooltip);
+        tabbedPane.setSelectedComponent(page.component);
     }
 
     private void addComponentsToPane(JFrame frame) {
@@ -30,9 +33,7 @@ public class App {
 
         addComponentsToPane(frame);
 
-
         frame.setVisible(true);
-
     }
 
     private void makeFrameFullScreen(JFrame frame) {

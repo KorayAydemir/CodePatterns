@@ -1,6 +1,5 @@
 package src;
 
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
@@ -80,7 +79,7 @@ public class EntryFrame {
         }
 
         public JButton getButton() {
-            return createButton(buttonText, page.getTooltip(), null, (e) -> {
+            return createButton(buttonText, page.tooltip, null, (e) -> {
                 App app = new App();
                 app.addTab(page);
 

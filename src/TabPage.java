@@ -1,7 +1,6 @@
 package src;
 
 import javax.swing.Icon;
-import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 public class TabPage {
@@ -15,21 +14,5 @@ public class TabPage {
         this.icon = icon;
         this.tooltip = tooltip;
         this.component = component;
-    }
-
-    public JComponent getPane() {
-        return component;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public Icon getIcon() {
-        return icon;
-    }
-
-    public String getTooltip() {
-        return tooltip;
     }
 }
