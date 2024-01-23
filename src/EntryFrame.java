@@ -47,12 +47,9 @@ public class EntryFrame {
         buttonsContainer.setPreferredSize(new Dimension(200, 200));
 
         final JButton startButton = new NavigationButton("Start Learning", new LearningCardsTab()).getButton();
-        // final JButton aboutButton = new NavigationButton("About", new
-        // ()).getButton(); // TODO IMPLEMENT
 
         buttonsContainer.add(startButton);
         buttonsContainer.add(Box.createRigidArea(new Dimension(0, 10)));
-        // buttonsContainer.add(aboutButton); // TODO IMPLEMENT
 
         return buttonsContainer;
     }
