@@ -27,9 +27,15 @@ public class App {
         return single_instance;
     }
 
-    public void addTab(TabPage page) {
-        tabbedPane.addTab(page.title, page.icon, page.component);
-        tabbedPane.setSelectedComponent(page.component);
+    public void addTab(TabPage tab) {
+        if (!isTabOpen(tab)) {
+            tabbedPane.addTab(tab.title, tab.icon, tab.component);
+        }
+        tabbedPane.setSelectedComponent(tab.component);
+    }
+
+    private boolean isTabOpen(TabPage tab) {
+        return tabbedPane.indexOfComponent(tab.component) != -1;
     }
 
     private void addComponentsToPane(JFrame frame) {
