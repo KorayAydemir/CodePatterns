@@ -80,6 +80,9 @@ public class LearningCard {
         editButton.setMargin(new Insets(0, 0, 0, 0));
         editButton.setContentAreaFilled(false);
         editButton.setBorder(null);
+        editButton.addActionListener((e) -> {
+            App.getInstance().addTab(new EditLearningCardTab(tabToOpen));
+        });
 
         try {
             Image img = ImageIO.read(new File("src/assets/book.224x256.png"));

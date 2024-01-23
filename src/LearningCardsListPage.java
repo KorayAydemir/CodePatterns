@@ -69,6 +69,7 @@ class LearningCards {
                 JSONObject learningPageObj = jsonArray.getJSONObject(i);
                 JSONObject cardObj = learningPageObj.getJSONObject("card");
 
+                String pageUid = learningPageObj.getString("uid");
                 String pageTitle = learningPageObj.getString("title");
                 String pageBody = learningPageObj.getString("body");
 
@@ -77,7 +78,7 @@ class LearningCards {
                 String cardTooltip = cardObj.getString("tooltip");
 
 
-                LearningCardTab learningCardTab = new LearningCardTab(pageTitle, pageBody, cardTitle, cardDesc, cardTooltip);
+                LearningCardTab learningCardTab = new LearningCardTab(pageTitle, pageBody, cardTitle, cardDesc, cardTooltip, pageUid);
                 LearningCard card = new LearningCard(cardTitle, cardDesc, cardTooltip, learningCardTab);
 
                 cardsContainer.add(card.component);
@@ -108,6 +109,6 @@ class LearningCardsTab extends TabPage {
     public static final Icon icon = null;
 
     LearningCardsTab() {
-        super(new LearningCardsListPage().page, name, icon);
+        super(new LearningCardsListPage().page, name, icon, "x");
     }
 }

@@ -27,6 +27,10 @@ public class App {
         return single_instance;
     }
 
+    public void closeSelectedTab() {
+        tabbedPane.remove(tabbedPane.getSelectedIndex());
+    }
+
     public void addTab(TabPage tab) {
         if (!isTabOpen(tab)) {
             tabbedPane.addTab(tab.title, tab.icon, tab.component);
