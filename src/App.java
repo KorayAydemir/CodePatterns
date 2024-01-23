@@ -8,13 +8,23 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 
 public class App {
+    private static App single_instance = null;
+
     private static final JFrame frame = new JFrame("Hello, World!");
     private static final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
 
-    public App() {
+    private App() {
         SwingUtilities.invokeLater(() -> {
             createAndShowGUI(frame);
         });
+    }
+
+    public static synchronized App getInstance() {
+        if (single_instance == null) {
+            single_instance = new App();
+        }
+
+        return single_instance;
     }
 
     public static void addTab(TabPage page) {

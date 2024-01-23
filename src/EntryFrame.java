@@ -80,8 +80,8 @@ public class EntryFrame {
 
         public JButton getButton() {
             return createButton(buttonText, page.tooltip, null, (e) -> {
-                App app = new App();
-                app.addTab(page);
+                App.getInstance();
+                App.addTab(page);
 
                 frame.dispose();
             });
