@@ -4,12 +4,17 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -32,12 +37,11 @@ class LearningCards {
 
     public LearningCards() {
         Card card = new Card("title", "tooltip tooltip tooltip tooltip tooltip tooltip ", "contentPreview");
-
         cardsContainer.add(card.component);
     }
 
     private class Card {
-        final JButton editButton = new CardButton("HB").getButton();
+        final JButton editButton = new JButton();
         final JPanel component = new JPanel(new GridBagLayout());
 
         public Card(String title, String desc, String contentPreview) {
@@ -46,19 +50,19 @@ class LearningCards {
             JLabel descText = new JLabel();
             descText.setText("<html>" + desc + "</html>");
 
+            setUpButton();
             setUpCard();
 
-            GridBagConstraints cTitleLabel = setUpTitleConstraints(titleLabel);
-            GridBagConstraints cDesc = setUpDescConstraints(descText);
-            GridBagConstraints cEditButton = setUpEditButtonConstraints();
-            editButton.setMinimumSize(new Dimension(25, 25));
+            GridBagConstraints cTitleLabel = createTitleConstraints(titleLabel);
+            GridBagConstraints cDesc = createDescConstraints(descText);
+            GridBagConstraints cEditButton = createEditButtonConstraints();
 
             component.add(titleLabel, cTitleLabel);
             component.add(descText, cDesc);
             component.add(editButton, cEditButton);
         }
 
-        private GridBagConstraints setUpTitleConstraints(JLabel titleLabel) {
+        private GridBagConstraints createTitleConstraints(JLabel titleLabel) {
             GridBagConstraints c = new GridBagConstraints();
 
             c.fill = GridBagConstraints.HORIZONTAL;
@@ -69,7 +73,7 @@ class LearningCards {
             return c;
         }
 
-        private GridBagConstraints setUpDescConstraints(JLabel descText) {
+        private GridBagConstraints createDescConstraints(JLabel descText) {
             GridBagConstraints c = new GridBagConstraints();
             c.fill = GridBagConstraints.HORIZONTAL;
             c.anchor = GridBagConstraints.FIRST_LINE_START;
@@ -81,13 +85,29 @@ class LearningCards {
             return c;
         }
 
-        private GridBagConstraints setUpEditButtonConstraints() {
+        private GridBagConstraints createEditButtonConstraints() {
             GridBagConstraints c = new GridBagConstraints();
             c.anchor = GridBagConstraints.FIRST_LINE_END;
             c.gridy = 0;
             c.gridheight = 1;
 
             return c;
+        }
+
+        private void setUpButton() {
+            editButton.setMinimumSize(new Dimension(25, 25));
+            editButton.setVisible(false);
+            editButton.setMargin(new Insets(0, 0, 0, 0));
+            editButton.setContentAreaFilled(false);
+            editButton.setBorder(null);
+
+            try {
+                Image img = ImageIO.read(new File("src/assets/book.224x256.png"));
+                Image scaledImg = img.getScaledInstance(25, 25, Image.SCALE_REPLICATE);
+                editButton.setIcon(new ImageIcon(scaledImg));
+            } catch (Exception e) {
+                System.out.println("Error reading image: " + e);
+            }
         }
 
         private void setUpCard() {
@@ -126,19 +146,6 @@ class LearningCards {
 
         void openContentInNewTab() {
             App.addTab(new LearningCardsTab());
-        }
-    }
-
-    class CardButton {
-        JButton button = new JButton();
-
-        public CardButton(String text) {
-            button.setMaximumSize(new Dimension(20, 20));
-            button.setVisible(false);
-        }
-
-        public JButton getButton() {
-            return button;
         }
     }
 }
