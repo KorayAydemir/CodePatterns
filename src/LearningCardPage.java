@@ -7,7 +7,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import javax.sound.sampled.Control.Type;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -26,6 +25,8 @@ public class LearningCardPage implements TabPage {
     public JPanel component = new JPanel();
     public String title;
     public String body;
+    public String cardTitle;
+    public String cardDesc;
     public String uid;
 
     public LearningCardPage(String title, String body, String cardTitle, String cardDesc, String cardTooltip,
@@ -33,6 +34,8 @@ public class LearningCardPage implements TabPage {
         createAndShowGUI(title, body);
         this.title = title;
         this.body = body;
+        this.cardTitle = cardTitle;
+        this.cardDesc = cardDesc;
         this.uid = uid;
     }
 
@@ -51,6 +54,8 @@ class EditLearningCardPage implements TabPage {
     public EditLearningCardPage(LearningCardPage editPage) {
         var editPageTitle = editPage.title;
         var editPageBody = editPage.body;
+        var editCardTitle = editPage.cardTitle;
+        var editCardDesc = editPage.cardDesc;
 
         JButton saveButton = new JButton("Save");
         JTextField titleInput = new JTextField();
@@ -59,19 +64,25 @@ class EditLearningCardPage implements TabPage {
         JTextArea cardDescInput = new JTextArea();
 
         new EditLearningCardPageGUI()
-                .createAndShowGUI(editPageTitle, editPageBody, saveButton, titleInput, cardTitleInput, cardDescInput, bodyInput)
-                .createBehaviour(saveButton, titleInput, bodyInput, editPage.uid);
+                .createAndShowGUI(editPageTitle, editPageBody, editCardTitle, editCardDesc, saveButton,
+                        titleInput, cardTitleInput, cardDescInput,
+                        bodyInput)
+                .createBehaviour(saveButton, titleInput, bodyInput, cardTitleInput, cardDescInput, editPage.uid);
     }
 
     private class EditLearningCardPageGUI {
         public EditLearningCardPageGUI() {
         }
 
-        private EditLearningCardPageGUI createAndShowGUI(String editPageTitle, String editPageBody, JButton saveButton,
+        private EditLearningCardPageGUI createAndShowGUI(String editPageTitle, String editPageBody,
+                String editCardDesc, String editCardTitle, JButton saveButton,
+
                 JTextField titleInput, JTextField cardTitleInput, JTextArea cardDescInput, JTextArea bodyInput) {
 
             titleInput.setText(editPageTitle);
             bodyInput.setText(editPageBody);
+            cardTitleInput.setText(editCardTitle);
+            cardDescInput.setText(editCardDesc);
 
             component.setLayout(new GridBagLayout());
             component.setBorder(BorderFactory.createEmptyBorder(10, 30, 30, 30));
@@ -139,12 +150,12 @@ class EditLearningCardPage implements TabPage {
             return this;
         }
 
-        private void createBehaviour(JButton saveButton, JTextField titleInput, JTextArea bodyInput, String uid) {
+        private void createBehaviour(JButton saveButton, JTextField titleInput, JTextArea bodyInput, JTextField cardTitleInput, JTextArea cardDescInput, String uid) {
             saveButton.addActionListener((e) -> {
                 String newTitle = titleInput.getText();
                 String newBody = bodyInput.getText();
-                String newCardTitle = titleInput.getText();
-                String newCardDesc = bodyInput.getText();
+                String newCardTitle = cardTitleInput.getText();
+                String newCardDesc = cardDescInput.getText();
 
                 LearningCardPage page = new LearningCardPage(newTitle, newBody, newTitle, newBody, "", uid);
                 App.closeSelectedTab();
@@ -154,7 +165,8 @@ class EditLearningCardPage implements TabPage {
             });
         }
 
-        public void editJSON(String targetUid, String newTitle, String newBody, String newCardTitle, String newCardDesc) {
+        public void editJSON(String targetUid, String newTitle, String newBody, String newCardTitle,
+                String newCardDesc) {
             try {
                 String filePath = "src/data/LearningPages.json";
                 JSONArray jsonArray = readJsonFile(filePath);
@@ -165,8 +177,8 @@ class EditLearningCardPage implements TabPage {
                     if (obj.has("uid") && obj.getString("uid").equals(targetUid)) {
                         obj.put("title", newTitle);
                         obj.put("body", newBody);
-                        obj.getJSONObject("card").put("title", newTitle);
-                        obj.getJSONObject("card").put("desc", newBody);
+                        obj.getJSONObject("card").put("title", newCardTitle);
+                        obj.getJSONObject("card").put("desc", newCardDesc);
                         jsonArray.put(i, obj);
                         break;
                     }
@@ -177,7 +189,7 @@ class EditLearningCardPage implements TabPage {
                 } catch (IOException e) {
                     System.out.println("Error writing to file: " + e);
                     e.printStackTrace();
-                } finally  {
+                } finally {
                     SwingUtilities.invokeLater(() -> {
                         App.component.setComponentAt(0, new LearningCardsListPage().component);
                     });
