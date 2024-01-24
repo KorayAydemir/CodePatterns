@@ -1,4 +1,5 @@
-package src;
+
+package src.components;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,8 +19,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import src.App;
+import src.EditLearningCardPage;
+import src.LearningCardPage;
+
 public class LearningCard {
-    final JPanel component = new JPanel(new GridBagLayout());
+    public final JPanel component = new JPanel(new GridBagLayout());
     final LearningCardPage tabToOpen;
 
     public LearningCard(String title, String desc, String tooltip, LearningCardPage tabToOpen) {

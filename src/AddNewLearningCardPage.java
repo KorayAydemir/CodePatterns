@@ -61,6 +61,7 @@ public class AddNewLearningCardPage {
                 } finally {
                     SwingUtilities.invokeLater(() -> {
                         App.component.setComponentAt(0, new LearningCardsListPage().component);
+                        App.closeSelectedTab();
                         App.component.setSelectedIndex(0);
                     });
                 }

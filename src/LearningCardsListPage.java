@@ -16,6 +16,8 @@ import javax.swing.JPanel;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import src.components.LearningCard;
+
 public class LearningCardsListPage implements TabPage {
     JPanel component = new JPanel();
 
