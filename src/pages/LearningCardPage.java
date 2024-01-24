@@ -1,6 +1,7 @@
 package src.pages;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
@@ -36,7 +37,9 @@ public class LearningCardPage implements TabPage {
         component.setBorder(BorderFactory.createEmptyBorder(10, 30, 30, 30));
 
         component.add(new JLabel("<html><h1>" + title + "</h1></html>"));
-        component.add(new JLabel("<html>" + body + "</html>"));
+        var bodyLabel = new JLabel("<html>" + body + "</html>");
+        bodyLabel.setFont(new Font(bodyLabel.getName(), Font.PLAIN, 18));
+        component.add(bodyLabel);
     }
 }
 

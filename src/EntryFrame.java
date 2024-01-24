@@ -13,7 +13,7 @@ import javax.swing.SwingUtilities;
 import src.pages.LearningCardsListPage;
 
 public class EntryFrame {
-    private static final JFrame frame = new JFrame("Hello, World!");
+    private static final JFrame frame = new JFrame("CodePatterns");
 
     public static void main(String... args) {
         SwingUtilities.invokeLater(() -> {
