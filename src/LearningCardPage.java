@@ -161,16 +161,44 @@ class EditLearningCardPage implements TabPage {
                 App.closeSelectedTab();
                 App.addTab(newTitle, null, page.component, "", true);
 
-                editJSON(uid, newTitle, newBody, newCardTitle, newCardDesc);
+                JSONArray jsonArray = null;
+                try {
+                    jsonArray = parseJSONArrayFromFile("src/data/LearningPages.json");
+                } catch (IOException io) {
+                    System.out.println("Error reading file: " + e);
+                    io.printStackTrace();
+                }
+
+                JSONArray editedJSONArray = editJSON(jsonArray, uid, newTitle, newBody, newCardTitle, newCardDesc);
+
+                try {
+                    writeJSONArrayToFile("src/data/LearningPages.json", editedJSONArray);
+                } catch (IOException e1) {
+                    System.out.println("Error writing to file: " + e);
+                    e1.printStackTrace();
+                } finally {
+                    SwingUtilities.invokeLater(() -> {
+                        App.component.setComponentAt(0, new LearningCardsListPage().component);
+                    });
+                }
             });
         }
 
-        public void editJSON(String targetUid, String newTitle, String newBody, String newCardTitle,
-                String newCardDesc) {
-            try {
-                String filePath = "src/data/LearningPages.json";
-                JSONArray jsonArray = readJsonFile(filePath);
+        private JSONArray parseJSONArrayFromFile(String filePath) throws IOException {
+            FileReader fileReader = new FileReader(filePath);
+            JSONTokener jsonTokener = new JSONTokener(fileReader);
+            return new JSONArray(jsonTokener);
 
+        }
+
+        private void writeJSONArrayToFile(String filePath, JSONArray jsonArray) throws IOException {
+            try (FileWriter fileWriter = new FileWriter(filePath)) {
+                fileWriter.write(jsonArray.toString(4)); // '4' is the number of spaces to use for indentation
+            }
+        }
+
+        public JSONArray editJSON(JSONArray jsonArray, String targetUid, String newTitle, String newBody, String newCardTitle,
+                String newCardDesc) {
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject obj = jsonArray.getJSONObject(i);
 
@@ -184,32 +212,7 @@ class EditLearningCardPage implements TabPage {
                     }
                 }
 
-                try {
-                    writeJsonFile(filePath, jsonArray);
-                } catch (IOException e) {
-                    System.out.println("Error writing to file: " + e);
-                    e.printStackTrace();
-                } finally {
-                    SwingUtilities.invokeLater(() -> {
-                        App.component.setComponentAt(0, new LearningCardsListPage().component);
-                    });
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                return jsonArray;
         }
-
-        private static JSONArray readJsonFile(String filePath) throws IOException {
-            FileReader fileReader = new FileReader(filePath);
-            JSONTokener jsonTokener = new JSONTokener(fileReader);
-            return new JSONArray(jsonTokener);
-        }
-
-        private static void writeJsonFile(String filePath, JSONArray jsonArray) throws IOException {
-            try (FileWriter fileWriter = new FileWriter(filePath)) {
-                fileWriter.write(jsonArray.toString(4)); // The '4' is the number of spaces to use for indentation
-            }
-        }
-
     }
 }
