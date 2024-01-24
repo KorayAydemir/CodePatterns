@@ -2,11 +2,9 @@ package src;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -25,17 +23,17 @@ public class EntryFrame {
         final JButton startButton = new JButton("Start Learning");
 
         new EntryFrameGUI()
-            .createAndShowGUI(frame, startButton)
-            .createBehaviour(startButton);
+                .createAndShowGUI(frame, startButton)
+                .createBehaviour(startButton);
     }
 
     private class EntryFrameGUI {
-        public EntryFrameGUI() {}
+        public EntryFrameGUI() {
+        }
 
         private EntryFrameGUI createAndShowGUI(JFrame frame, JButton startButton) {
             styleFrame(frame);
             styleStartButton(startButton);
-            //NavigationButton("Start Learning", new LearningCardsListPage()).getButton();
 
             JPanel buttonContainer = new JPanel();
             styleButtonsContainer(buttonContainer, startButton);

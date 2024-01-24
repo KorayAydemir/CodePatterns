@@ -28,16 +28,25 @@ public class App {
         return single_instance;
     }
 
-    public void closeSelectedTab() {
-        component.remove(component.getSelectedIndex());
-    }
-
-    private boolean isTabOpen(JPanel tab) {
-        return component.indexOfComponent(tab.component) != -1;
-    }
-
     private void addComponentsToPane(JFrame frame) {
         frame.add(component);
+    }
+
+    private static boolean isPageOpen(JPanel page) {
+        return component.indexOfComponent(page) != -1;
+    }
+
+    public static void addTab(String title, String icon, JPanel page, String uid, boolean switchToTab) {
+        if (!isPageOpen(page)) {
+            component.addTab(title, null, page, uid);
+        }
+        if (switchToTab || isPageOpen(page)) {
+            component.setSelectedComponent(page);
+        }
+    }
+
+    public static void closeSelectedTab() {
+        component.remove(App.component.getSelectedIndex());
     }
 
     private void createAndShowGUI(JFrame frame) {

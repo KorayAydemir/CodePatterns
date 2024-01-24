@@ -9,7 +9,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import javax.swing.BorderFactory;
-import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -45,7 +44,6 @@ public class LearningCardsListPage implements TabPage {
             cPageDesc.gridy = 1;
             cPageDesc.weighty = 0;
 
-            LearningCards learningCards = new LearningCards();
             var cLearningCards = new GridBagConstraints();
             cLearningCards.anchor = GridBagConstraints.FIRST_LINE_START;
             cLearningCards.gridx = 0;
@@ -54,6 +52,7 @@ public class LearningCardsListPage implements TabPage {
 
             component.add(pageTitle, cTitle);
             component.add(pageDesc, cPageDesc);
+            var learningCards = new LearningCards();
             component.add(learningCards.cardsContainer, cLearningCards);
         }
 
@@ -62,32 +61,36 @@ public class LearningCardsListPage implements TabPage {
 }
 
 class LearningCards {
-    JPanel cardsContainer = new JPanel(new GridLayout(0, 5, 35, 30));
+    JPanel cardsContainer;
 
     public LearningCards() {
-        try {
-            JSONArray jsonArray = parseJSONArrayFromFile("src/data/LearningPages.json");
+        this.cardsContainer = new JPanel(new GridLayout(0, 5, 35, 30));
 
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject learningPageObj = jsonArray.getJSONObject(i);
-                JSONObject cardObj = learningPageObj.getJSONObject("card");
+        JSONArray jsonArray = parseJSONArrayFromFile("src/data/LearningPages.json");
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject learningPageObj = jsonArray.getJSONObject(i);
+            JSONObject cardObj = learningPageObj.getJSONObject("card");
 
-                String pageUid = learningPageObj.getString("uid");
-                String pageTitle = learningPageObj.getString("title");
-                String pageBody = learningPageObj.getString("body");
+            String pageTitle = learningPageObj.getString("title");
+            String pageBody = learningPageObj.getString("body");
 
-                String cardTitle = cardObj.getString("title");
-                String cardDesc = cardObj.getString("desc");
-                String cardTooltip = cardObj.getString("tooltip");
+            String cardTitle = cardObj.getString("title");
+            String cardDesc = cardObj.getString("desc");
+            String cardTooltip = cardObj.getString("tooltip");
 
-                LearningCardPage learningCardPage = new LearningCardPage(pageTitle, pageBody, cardTitle, cardDesc,
-                        cardTooltip, pageUid);
-                LearningCard card = new LearningCard(cardTitle, cardDesc, cardTooltip, learningCardPage);
+            LearningCardsGUI.createGUI(cardsContainer, pageTitle, pageBody, cardTitle, cardDesc, cardTooltip);
+        }
+    }
 
-                cardsContainer.add(card.component);
-            }
-        } catch (Exception e) {
-            System.out.println(e);
+    private class LearningCardsGUI {
+        public static void createGUI(JPanel cardsContainer, String pageTitle, String pageBody, String cardTitle, String cardDesc,
+                String cardTooltip) {
+
+            var learningCardPage = new LearningCardPage(pageTitle, pageBody, cardTitle, cardDesc,
+                    cardTooltip);
+            var card = new LearningCard(cardTitle, cardDesc, cardTooltip, learningCardPage);
+
+            cardsContainer.add(card.component);
         }
     }
 

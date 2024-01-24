@@ -6,7 +6,6 @@ import java.awt.GridBagLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -36,7 +35,7 @@ public class LearningCardPage implements TabPage {
 
 
 class EditLearningCardPage implements TabPage {
-    private JPanel component = new JPanel();
+    public JPanel component = new JPanel();
 
     public EditLearningCardPage(LearningCardPage editPage) {
         var editPageTitle = editPage.title;
@@ -102,12 +101,9 @@ class EditLearningCardPage implements TabPage {
                 String newTitle = titleInput.getText();
                 String newBody = bodyInput.getText();
 
-                LearningCardPage page = new LearningCardPage(newTitle, newBody, newTitle, newBody, "", uid);
-                App.getInstance().closeSelectedTab();
-                App.getInstance().addTab(page);
-
-                //setTitle(newTitle);
-                //setBody(newBody);
+                LearningCardPage page = new LearningCardPage(newTitle, newBody, newTitle, newBody, "");
+                App.closeSelectedTab();
+                App.addTab(newTitle, null, page.component, "", true);
             });
         }
     }

@@ -35,7 +35,8 @@ public class LearningCard {
         LearningCardGUI() {
         }
 
-        private LearningCardGUI createGUI(JPanel component, String title, String desc, String tooltip, JButton editButton) {
+        private LearningCardGUI createGUI(JPanel component, String title, String desc, String tooltip,
+                JButton editButton) {
             styleButton(editButton);
             styleComponent(component);
 
@@ -59,7 +60,7 @@ public class LearningCard {
         private void createBehaviour(JPanel component, JButton editButton) {
             component.addMouseListener(new HoverMouseListener(editButton, tabToOpen));
             editButton.addActionListener((e) -> {
-                App.getInstance().addTab(new EditLearningCardPage(tabToOpen));
+                App.addTab("Edit Learning Card", null, new EditLearningCardPage(tabToOpen).component, "editLearningCard", true);
             });
         }
 
@@ -135,7 +136,7 @@ public class LearningCard {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            App.getInstance().addTab(tabToOpen);
+            App.addTab(tabToOpen.title, null, tabToOpen.component, "", false);
         }
 
         @Override
