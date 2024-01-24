@@ -7,11 +7,13 @@ else
 endif
 
 ifeq ($(detected_OS),Windows)
-	SEP = ;
-	RMDIR = rmdir /s /q
+	JAVA_OPTS = -cp ./build;$(PACKAGES)
+	SHELL = cmd.exe
+	CLEAN_COMMAND = if exist build rmdir /s /q build
 else
-	SEP = :
-	RMDIR = rm -rf
+	JAVA_OPTS = -cp ./build:$(PACKAGES)
+    	SHELL = /bin/bash
+	CLEAN_COMMAND = rm -rf build
 endif
 
 PACKAGES = $(wildcard ./lib/*.jar)
@@ -21,12 +23,10 @@ JAVAC_CLASSES = $(wildcard ./src/*.java ./src/components/*.java ./src/pages/*.ja
 compile:
 	javac $(JAVAC_OPTS) $(JAVAC_CLASSES)
 
-JAVA_OPTS = -cp ./build$(SEP)$(PACKAGES)
 JAVA_MAIN_CLASS = src.EntryFrame
 run:
-	$(info $(detected_OS))
 	java $(JAVA_OPTS) $(JAVA_MAIN_CLASS)
 clean:
-	$(RMDIR) ./build
+	$(CLEAN_COMMAND)
 
 start: clean compile run
