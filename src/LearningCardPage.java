@@ -70,9 +70,8 @@ class EditLearningCardPage implements TabPage {
                 .createBehaviour(saveButton, titleInput, bodyInput, cardTitleInput, cardDescInput, editPage.uid);
     }
 
-    public class EditLearningCardPageGUI {
-        public EditLearningCardPageGUI() {
-        }
+    private class EditLearningCardPageGUI {
+        private EditLearningCardPageGUI() {}
 
         private EditLearningCardPageGUI createAndShowGUI(JPanel component, JButton saveButton,
                 JTextField titleInput, JTextField cardTitleInput, JTextArea cardDescInput, JTextArea bodyInput) {
@@ -109,7 +108,7 @@ class EditLearningCardPage implements TabPage {
 
                 JSONArray jsonArray = null;
                 try {
-                    jsonArray = parseJSONArrayFromFile("src/data/LearningPages.json");
+                    jsonArray = Utils.parseJSONArrayFromFile("src/data/LearningPages.json");
                 } catch (IOException io) {
                     System.out.println("Error reading file: " + e);
                     io.printStackTrace();
@@ -118,7 +117,7 @@ class EditLearningCardPage implements TabPage {
                 JSONArray editedJSONArray = editJSON(jsonArray, uid, newTitle, newBody, newCardTitle, newCardDesc);
 
                 try {
-                    writeJSONArrayToFile("src/data/LearningPages.json", editedJSONArray);
+                    Utils.writeJSONArrayToFile("src/data/LearningPages.json", editedJSONArray);
                 } catch (IOException e1) {
                     System.out.println("Error writing to file: " + e);
                     e1.printStackTrace();
@@ -128,19 +127,6 @@ class EditLearningCardPage implements TabPage {
                     });
                 }
             });
-        }
-
-        private JSONArray parseJSONArrayFromFile(String filePath) throws IOException {
-            FileReader fileReader = new FileReader(filePath);
-            JSONTokener jsonTokener = new JSONTokener(fileReader);
-            return new JSONArray(jsonTokener);
-
-        }
-
-        private void writeJSONArrayToFile(String filePath, JSONArray jsonArray) throws IOException {
-            try (FileWriter fileWriter = new FileWriter(filePath)) {
-                fileWriter.write(jsonArray.toString(4)); // '4' is the number of spaces to use for indentation
-            }
         }
 
         public JSONArray editJSON(JSONArray jsonArray, String targetUid, String newTitle, String newBody,
