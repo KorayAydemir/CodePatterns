@@ -1,192 +1,83 @@
 [
     {
         "uid": "1",
-        "title": "ttttttttttttttttttttttttttdfsdfsdfsdfds",
-        "body": "fasdas",
+        "title": "Introduction to Variables in Python",
+        "body": "Variables in Python are used to store and manage data. They act as containers for storing values, such as numbers or text. In Python, you can create a variable by assigning a value to it using the '=' operator. For example, 'x = 10' creates a variable named 'x' with a value of 10. Variables are essential for performing operations and manipulating data in a program.",
         "card": {
             "tooltip": "Hey there!",
-            "title": "fdfdffsdfsdf",
-            "desc": "cc"
+            "title": "Understanding Variables",
+            "desc": "Explore the basics of variables and how to use them effectively in Python."
         }
     },
     {
         "uid": "2",
-        "title": "2 page title",
-        "body": "2body",
+        "title": "Conditional Statements in JavaScript",
+        "body": "Conditional statements allow you to control the flow of your code based on certain conditions. In JavaScript, 'if', 'else if', and 'else' statements are commonly used for decision-making. These statements enable your program to execute different code blocks depending on whether a specified condition evaluates to true or false. Mastering conditional statements is fundamental to writing dynamic and responsive scripts.",
         "card": {
             "tooltip": "Hey there!",
-            "title": "2 card title",
-            "desc": "2 card desc\t\t\t"
+            "title": "Mastering JavaScript Conditions",
+            "desc": "Learn the intricacies of conditional statements and how to use them efficiently in your JavaScript code."
         }
     },
     {
         "uid": "3",
-        "title": "Sample Document 3dqwdqw",
-        "body": "This is the content of the third document in Markdown format.",
+        "title": "Introduction to Markdown Formatting",
+        "body": "Markdown is a lightweight markup language that allows you to format plain text easily. It is widely used for creating documentation, README files, and online content. With Markdown, you can add headers, lists, links, images, and more to your text without the need for complex HTML tags. Understanding Markdown is essential for creating well-organized and visually appealing documents.",
         "card": {
             "tooltip": "Hey there!",
-            "title": "Card A3dqwdqw",
-            "desc": "Description Adwqdqw"
+            "title": "Markdown Mastery",
+            "desc": "Dive into the world of Markdown formatting and enhance your document creation skills."
         }
     },
     {
         "uid": "4",
-        "title": "Sample Document 4",
-        "body": "This is the content of the fourth document in Markdown format.",
+        "title": "Understanding Loops in Java",
+        "body": "Loops in Java are used to repeat a block of code multiple times. The 'for' loop, 'while' loop, and 'do-while' loop are common loop structures in Java. They provide a powerful mechanism for automating repetitive tasks and iterating over collections of data. Proficiency in using loops is crucial for efficient coding and solving problems that involve iteration. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.",
         "card": {
             "tooltip": "Hey there!",
-            "title": "Card A4",
-            "desc": "Description A"
+            "title": "Java Loop Mastery",
+            "desc": "Explore the different types of loops in Java and learn how to use them effectively in your programs."
         }
     },
     {
         "uid": "5",
-        "title": "Sample Document 5fewfewff",
-        "body": "This is the content of the fifth document in Markdown format.awefawefaw",
+        "title": "Introduction to Functions in Python",
+        "body": "Functions in Python allow you to group code into reusable blocks, making your programs modular and easier to maintain. You can define functions using the 'def' keyword and call them with specific arguments. Understanding how to create and use functions is a key concept in Python programming and contributes to writing clean and organized code.",
         "card": {
             "tooltip": "Hey there!",
-            "title": "Card A5fwfweaf",
-            "desc": "Description Aaweffawf"
+            "title": "Python Function Fundamentals",
+            "desc": "Delve into the world of functions in Python and enhance your coding skills by creating modular and efficient code."
         }
     },
     {
         "uid": "6",
-        "title": "Sample Document 6",
-        "body": "This is the content of the sixth document in Markdown format.",
+        "title": "Working with Arrays in JavaScript",
+        "body": "Arrays are a fundamental data structure in JavaScript, allowing you to store and manipulate lists of values. You can create arrays, access their elements, and perform various operations such as adding, removing, or updating elements. Proficiency in working with arrays is essential for handling collections of data in a dynamic and flexible manner.",
         "card": {
             "tooltip": "Hey there!",
-            "title": "Card A6",
-            "desc": "Description A"
+            "title": "JavaScript Array Mastery",
+            "desc": "Learn the ins and outs of JavaScript arrays and how to leverage their power in your web development projects."
         }
     },
     {
         "uid": "7",
-        "title": "Sample Document 7",
-        "body": "This is the content of the seventh document in Markdown format.",
+        "title": "Understanding Classes and Objects in Python",
+        "body": "Object-oriented programming in Python involves the use of classes and objects. A class is a blueprint for creating objects, which are instances of the class. Classes encapsulate data and behavior, providing a way to structure and organize code. Mastery of classes and objects is crucial for building scalable and maintainable Python applications.",
         "card": {
             "tooltip": "Hey there!",
-            "title": "Card A7",
-            "desc": "Description A"
+            "title": "Python OOP Essentials",
+            "desc": "Dive into the world of object-oriented programming in Python and unlock the power of classes and objects."
         }
     },
     {
         "uid": "8",
-        "title": "Sample Document 8",
-        "body": "This is the content of the eighth document in Markdown format.",
+        "title": "Handling Exceptions in Java",
+        "body": "Exceptions in Java are unexpected events that can disrupt the normal flow of a program. To handle exceptions, you can use 'try', 'catch', 'finally', and 'throw' statements. Effectively managing exceptions is crucial for writing robust and error-tolerant code. Learn how to handle different types of exceptions and ensure the stability of your Java applications.",
         "card": {
             "tooltip": "Hey there!",
-            "title": "Card A8",
-            "desc": "Description A"
-        }
-    },
-    {
-        "uid": "9",
-        "title": "Sample Document 9",
-        "body": "This is the content of the ninth document in Markdown format.",
-        "card": {
-            "tooltip": "Hey there!",
-            "title": "Card A9",
-            "desc": "Description A"
-        }
-    },
-    {
-        "uid": "10",
-        "title": "Sample Document 10",
-        "body": "This is the content of the tenth document in Markdown format.",
-        "card": {
-            "tooltip": "Hey there!",
-            "title": "Card A10",
-            "desc": "Description A"
-        }
-    },
-    {
-        "uid": "11",
-        "title": "Sample Document 11",
-        "body": "This is the content of the eleventh document in Markdown format.",
-        "card": {
-            "tooltip": "Hey there!",
-            "title": "Card A11",
-            "desc": "Description A"
-        }
-    },
-    {
-        "uid": "12",
-        "title": "Sample Document 12",
-        "body": "This is the content of the twelfth document in Markdown format.",
-        "card": {
-            "tooltip": "Hey there!",
-            "title": "Card A12",
-            "desc": "Description A"
-        }
-    },
-    {
-        "uid": "13",
-        "title": "Sample Document 13",
-        "body": "This is the content of the thirteenth document in Markdown format.",
-        "card": {
-            "tooltip": "Hey there!",
-            "title": "Card A13",
-            "desc": "Description A"
-        }
-    },
-    {
-        "uid": "14",
-        "title": "Sample Document 14",
-        "body": "This is the content of the fourteenth document in Markdown format.",
-        "card": {
-            "tooltip": "Hey there!",
-            "title": "Card A14",
-            "desc": "Description A"
-        }
-    },
-    {
-        "uid": "a4f2c6fb-dab7-45f7-89ff-c2abb48672d0",
-        "title": "yeni title",
-        "body": "yeni body",
-        "card": {
-            "tooltip": "Hey there!",
-            "title": "yeni card title",
-            "desc": "yeni card desc"
-        }
-    },
-    {
-        "uid": "ce22dc93-23c9-49c4-be26-03f624dc4ee1",
-        "title": "yer",
-        "body": "erfere",
-        "card": {
-            "tooltip": "frefre",
-            "title": "frefer",
-            "desc": "frefre"
-        }
-    },
-    {
-        "uid": "2877654f-cb78-499a-9a5e-7deceec704a2",
-        "title": "qwdqwdqawefawefawef",
-        "body": "qwdqwdqwdafweafeafwa",
-        "card": {
-            "tooltip": "qwdqwdqw",
-            "title": "dqwdqwdqwdqwdwaefewafwaf",
-            "desc": "qwdqwdqwawefawefawfaw"
-        }
-    },
-    {
-        "uid": "b67a8da4-5f40-4bca-b1db-6ccdcdaf3bac",
-        "title": "asdfadsf",
-        "body": "fasdasdf",
-        "card": {
-            "tooltip": "fsadfsd",
-            "title": "asdfas",
-            "desc": "fsadfsd"
-        }
-    },
-    {
-        "uid": "7352867b-11ce-40d6-91ff-0c6e500df31d",
-        "title": "a",
-        "body": "",
-        "card": {
-            "tooltip": "",
-            "title": "",
+            "title": "Java Exception Handling",
             "desc": ""
         }
     }
 ]
+
