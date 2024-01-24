@@ -17,11 +17,13 @@ public class LearningCardPage implements TabPage {
     public JPanel component = new JPanel();
     public String title;
     public String body;
+    public String uid;
 
-    public LearningCardPage(String title, String body, String cardTitle, String cardDesc, String cardTooltip) {
+    public LearningCardPage(String title, String body, String cardTitle, String cardDesc, String cardTooltip, String uid) {
         createAndShowGUI(title, body);
         this.title = title;
         this.body = body;
+        this.uid = uid;
     }
 
     private void createAndShowGUI(String title, String body) {
@@ -47,7 +49,7 @@ class EditLearningCardPage implements TabPage {
 
         new EditLearningCardPageGUI()
             .createAndShowGUI(editPageTitle, editPageBody, saveButton, titleInput, bodyInput)
-            .createBehaviour(saveButton, titleInput, bodyInput);
+            .createBehaviour(saveButton, titleInput, bodyInput, editPage.uid);
     }
 
     private class EditLearningCardPageGUI {
@@ -96,12 +98,12 @@ class EditLearningCardPage implements TabPage {
             return this;
         }
 
-        private void createBehaviour(JButton saveButton, JTextField titleInput, JTextArea bodyInput) {
+        private void createBehaviour(JButton saveButton, JTextField titleInput, JTextArea bodyInput, String uid) {
             saveButton.addActionListener((e) -> {
                 String newTitle = titleInput.getText();
                 String newBody = bodyInput.getText();
 
-                LearningCardPage page = new LearningCardPage(newTitle, newBody, newTitle, newBody, "");
+                LearningCardPage page = new LearningCardPage(newTitle, newBody, newTitle, newBody, "", uid);
                 App.closeSelectedTab();
                 App.addTab(newTitle, null, page.component, "", true);
             });

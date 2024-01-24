@@ -71,6 +71,7 @@ class LearningCards {
             JSONObject learningPageObj = jsonArray.getJSONObject(i);
             JSONObject cardObj = learningPageObj.getJSONObject("card");
 
+            String uid = learningPageObj.getString("uid");
             String pageTitle = learningPageObj.getString("title");
             String pageBody = learningPageObj.getString("body");
 
@@ -78,16 +79,16 @@ class LearningCards {
             String cardDesc = cardObj.getString("desc");
             String cardTooltip = cardObj.getString("tooltip");
 
-            LearningCardsGUI.createGUI(cardsContainer, pageTitle, pageBody, cardTitle, cardDesc, cardTooltip);
+            LearningCardsGUI.createGUI(cardsContainer, pageTitle, pageBody, cardTitle, cardDesc, cardTooltip, uid);
         }
     }
 
     private class LearningCardsGUI {
         public static void createGUI(JPanel cardsContainer, String pageTitle, String pageBody, String cardTitle, String cardDesc,
-                String cardTooltip) {
+                String cardTooltip, String uid) {
 
             var learningCardPage = new LearningCardPage(pageTitle, pageBody, cardTitle, cardDesc,
-                    cardTooltip);
+                    cardTooltip, uid);
             var card = new LearningCard(cardTitle, cardDesc, cardTooltip, learningCardPage);
 
             cardsContainer.add(card.component);
