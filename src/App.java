@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 
@@ -11,7 +12,7 @@ public class App {
     private static App single_instance = null;
 
     private static final JFrame frame = new JFrame("Hello, World!");
-    private static final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
+    public static final JTabbedPane component = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
 
     private App() {
         SwingUtilities.invokeLater(() -> {
@@ -28,22 +29,15 @@ public class App {
     }
 
     public void closeSelectedTab() {
-        tabbedPane.remove(tabbedPane.getSelectedIndex());
+        component.remove(component.getSelectedIndex());
     }
 
-    public void addTab(TabPage tab) {
-        if (!isTabOpen(tab)) {
-            tabbedPane.addTab(tab.title, tab.icon, tab.component);
-        }
-        tabbedPane.setSelectedComponent(tab.component);
-    }
-
-    private boolean isTabOpen(TabPage tab) {
-        return tabbedPane.indexOfComponent(tab.component) != -1;
+    private boolean isTabOpen(JPanel tab) {
+        return component.indexOfComponent(tab.component) != -1;
     }
 
     private void addComponentsToPane(JFrame frame) {
-        frame.add(tabbedPane);
+        frame.add(component);
     }
 
     private void createAndShowGUI(JFrame frame) {

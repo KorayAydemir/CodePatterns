@@ -22,62 +22,54 @@ public class EntryFrame {
     }
 
     public EntryFrame() {
-        createAndShowGUI(frame);
+        final JButton startButton = new JButton("Start Learning");
+
+        new EntryFrameGUI()
+            .createAndShowGUI(frame, startButton)
+            .createBehaviour(startButton);
     }
 
-    private void createAndShowGUI(JFrame frame) {
-        frame.setSize(new Dimension(640, 480));
-        frame.setLayout(new GridBagLayout());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    private class EntryFrameGUI {
+        public EntryFrameGUI() {}
 
-        addComponentsToPane(frame);
+        private EntryFrameGUI createAndShowGUI(JFrame frame, JButton startButton) {
+            styleFrame(frame);
+            styleStartButton(startButton);
+            //NavigationButton("Start Learning", new LearningCardsListPage()).getButton();
 
-        frame.setVisible(true);
-    }
+            JPanel buttonContainer = new JPanel();
+            styleButtonsContainer(buttonContainer, startButton);
+            frame.getContentPane().add(buttonContainer);
 
-    private void addComponentsToPane(JFrame frame) {
-        JPanel buttons = createButtons();
-        frame.getContentPane().add(buttons);
-    }
+            frame.setVisible(true);
 
-    private JPanel createButtons() {
-        JPanel buttonsContainer = new JPanel();
-        buttonsContainer.setLayout(new BoxLayout(buttonsContainer, BoxLayout.Y_AXIS));
-        buttonsContainer.setPreferredSize(new Dimension(200, 200));
-
-        final JButton startButton = new NavigationButton("Start Learning", new LearningCardsTab()).getButton();
-
-        buttonsContainer.add(startButton);
-        buttonsContainer.add(Box.createRigidArea(new Dimension(0, 10)));
-
-        return buttonsContainer;
-    }
-
-    private class NavigationButton {
-        private String buttonText;
-        private TabPage page;
-
-        public NavigationButton(String buttonText, TabPage page) {
-            this.buttonText = buttonText;
-            this.page = page;
+            return this;
         }
 
-        private static JButton createButton(String text, ImageIcon icon, ActionListener listener) {
-            JButton button = new JButton(text);
-            button.setMaximumSize(new Dimension(240, 80));
-
-            button.addActionListener(listener);
-
-            return button;
-        }
-
-        public JButton getButton() {
-            return createButton(buttonText, null, (e) -> {
-                App.getInstance().addTab(page);
-
+        private void createBehaviour(JButton startButton) {
+            startButton.addActionListener((e) -> {
+                App.getInstance();
+                App.component.addTab("Learning Cards", new LearningCardsListPage().component);
                 frame.dispose();
             });
         }
 
+        private void styleFrame(JFrame frame) {
+            frame.setSize(new Dimension(640, 480));
+            frame.setLayout(new GridBagLayout());
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        }
+
+        private void styleStartButton(JButton startButton) {
+            startButton.setMaximumSize(new Dimension(240, 80));
+        }
+
+        private void styleButtonsContainer(JPanel buttonsContainer, JButton startButton) {
+            buttonsContainer.setLayout(new BoxLayout(buttonsContainer, BoxLayout.Y_AXIS));
+            buttonsContainer.setPreferredSize(new Dimension(200, 200));
+
+            buttonsContainer.add(startButton);
+            buttonsContainer.add(Box.createRigidArea(new Dimension(0, 10)));
+        }
     }
 }

@@ -1,18 +1,17 @@
 package src;
 
-import javax.swing.Icon;
 import javax.swing.JPanel;
 
-public class TabPage {
-    public final JPanel component;
-    public final String title;
-    public final Icon icon;
-    public final String uid;
+public interface TabPage {
+    default void addTab(String title, String Icon, JPanel page, String uid) {
+        if (isTabOpen(uid)) {
+            App.component.setSelectedComponent(tab.component);
+            return;
+        }
 
-    public TabPage(JPanel component, String title, Icon icon, String uid) {
-        this.component = component;
-        this.title = title;
-        this.icon = icon;
-        this.uid = uid;
+        App.component.addTab(tab.title, tab.icon, tab.component);
+    }
+
+    default boolean isTabOpen(String uid) {
     }
 }

@@ -19,90 +19,115 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class LearningCard {
-    final JButton editButton = new JButton();
     final JPanel component = new JPanel(new GridBagLayout());
-    final LearningCardTab tabToOpen;
+    final LearningCardPage tabToOpen;
 
-    public LearningCard(String title, String desc, String tooltip, LearningCardTab tabToOpen) {
+    public LearningCard(String title, String desc, String tooltip, LearningCardPage tabToOpen) {
         this.tabToOpen = tabToOpen;
-        setUpCard();
 
-        setUpButton();
-        JLabel titleLabel = new JLabel();
-        titleLabel.setText("<html><h2>" + title + "</h2></html>");
-        JLabel descText = new JLabel();
-        descText.setText("<html>" + desc + "</html>");
-
-        GridBagConstraints cTitleLabel = createTitleConstraints(titleLabel);
-        GridBagConstraints cDesc = createDescConstraints(descText);
-        GridBagConstraints cEditButton = createEditButtonConstraints();
-
-        component.add(titleLabel, cTitleLabel);
-        component.add(descText, cDesc);
-        component.add(editButton, cEditButton);
+        JButton editButton = new JButton();
+        new LearningCardGUI()
+                .createGUI(component, title, desc, tooltip, editButton)
+                .createBehaviour(component, editButton);
     }
 
-    private GridBagConstraints createTitleConstraints(JLabel titleLabel) {
-        GridBagConstraints c = new GridBagConstraints();
+    private class LearningCardGUI {
+        LearningCardGUI() {
+        }
 
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.anchor = GridBagConstraints.FIRST_LINE_START;
-        c.weightx = 0.9;
-        c.gridx = 0;
-        c.gridy = 0;
-        return c;
-    }
+        private LearningCardGUI createGUI(JPanel component, String title, String desc, String tooltip, JButton editButton) {
+            styleButton(editButton);
+            styleComponent(component);
 
-    private GridBagConstraints createDescConstraints(JLabel descText) {
-        GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.anchor = GridBagConstraints.FIRST_LINE_START;
-        c.weightx = 1;
-        c.weighty = 0.9;
-        c.gridwidth = 2;
-        c.gridx = 0;
-        c.gridy = 1;
-        return c;
-    }
+            JLabel titleLabel = new JLabel();
+            titleLabel.setText("<html><h2>" + title + "</h2></html>");
 
-    private GridBagConstraints createEditButtonConstraints() {
-        GridBagConstraints c = new GridBagConstraints();
-        c.anchor = GridBagConstraints.FIRST_LINE_END;
-        c.gridy = 0;
-        c.gridheight = 1;
+            JLabel descText = new JLabel();
+            descText.setText("<html>" + desc + "</html>");
 
-        return c;
-    }
+            GridBagConstraints cTitleLabel = createTitleConstraints(titleLabel);
+            GridBagConstraints cDesc = createDescConstraints(descText);
+            GridBagConstraints cEditButton = createEditButtonConstraints();
 
-    private void setUpButton() {
-        editButton.setMinimumSize(new Dimension(25, 25));
-        editButton.setVisible(false);
-        editButton.setMargin(new Insets(0, 0, 0, 0));
-        editButton.setContentAreaFilled(false);
-        editButton.setBorder(null);
-        editButton.addActionListener((e) -> {
-            App.getInstance().addTab(new EditLearningCardTab(tabToOpen));
-        });
+            component.add(titleLabel, cTitleLabel);
+            component.add(descText, cDesc);
+            component.add(editButton, cEditButton);
 
-        try {
-            Image img = ImageIO.read(new File("src/assets/book.224x256.png"));
-            Image scaledImg = img.getScaledInstance(25, 25, Image.SCALE_REPLICATE);
-            editButton.setIcon(new ImageIcon(scaledImg));
-        } catch (Exception e) {
-            System.out.println("Error reading image: " + e);
+            return this;
+        }
+
+        private void createBehaviour(JPanel component, JButton editButton) {
+            component.addMouseListener(new HoverMouseListener(editButton, tabToOpen));
+            editButton.addActionListener((e) -> {
+                App.getInstance().addTab(new EditLearningCardPage(tabToOpen));
+            });
+        }
+
+        private GridBagConstraints createTitleConstraints(JLabel titleLabel) {
+            GridBagConstraints c = new GridBagConstraints();
+
+            c.fill = GridBagConstraints.HORIZONTAL;
+            c.anchor = GridBagConstraints.FIRST_LINE_START;
+            c.weightx = 0.9;
+            c.gridx = 0;
+            c.gridy = 0;
+            return c;
+        }
+
+        private GridBagConstraints createDescConstraints(JLabel descText) {
+            GridBagConstraints c = new GridBagConstraints();
+            c.fill = GridBagConstraints.HORIZONTAL;
+            c.anchor = GridBagConstraints.FIRST_LINE_START;
+            c.weightx = 1;
+            c.weighty = 0.9;
+            c.gridwidth = 2;
+            c.gridx = 0;
+            c.gridy = 1;
+            return c;
+        }
+
+        private GridBagConstraints createEditButtonConstraints() {
+            GridBagConstraints c = new GridBagConstraints();
+            c.anchor = GridBagConstraints.FIRST_LINE_END;
+            c.gridy = 0;
+            c.gridheight = 1;
+
+            return c;
+        }
+
+        private void styleButton(JButton editButton) {
+            editButton.setMinimumSize(new Dimension(25, 25));
+            editButton.setVisible(false);
+            editButton.setMargin(new Insets(0, 0, 0, 0));
+            editButton.setContentAreaFilled(false);
+            editButton.setBorder(null);
+
+            try {
+                Image img = ImageIO.read(new File("src/assets/book.224x256.png"));
+                Image scaledImg = img.getScaledInstance(25, 25, Image.SCALE_REPLICATE);
+                editButton.setIcon(new ImageIcon(scaledImg));
+            } catch (Exception e) {
+                System.out.println("Error reading image: " + e);
+            }
+        }
+
+        private void styleComponent(JPanel component) {
+            component.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(Color.black),
+                    BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+            component.setPreferredSize(new Dimension(300, 130));
         }
     }
 
-    private void setUpCard() {
-        component.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.black),
-                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-        component.setPreferredSize(new Dimension(300, 130));
-
-        component.addMouseListener(new HoverMouseListener());
-    }
-
     public class HoverMouseListener extends MouseAdapter {
+        private JButton editButton;
+        private LearningCardPage tabToOpen;
+
+        HoverMouseListener(JButton editButton, LearningCardPage tabToOpen) {
+            this.editButton = editButton;
+            this.tabToOpen = tabToOpen;
+        }
+
         @Override
         public void mouseEntered(MouseEvent e) {
             editButton.setVisible(true);
@@ -110,7 +135,7 @@ public class LearningCard {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            App.getInstance().addTab(tabToOpen); 
+            App.getInstance().addTab(tabToOpen);
         }
 
         @Override
