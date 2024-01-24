@@ -64,93 +64,39 @@ class EditLearningCardPage implements TabPage {
         JTextArea cardDescInput = new JTextArea();
 
         new EditLearningCardPageGUI()
-                .createAndShowGUI(editPageTitle, editPageBody, editCardTitle, editCardDesc, saveButton,
-                        titleInput, cardTitleInput, cardDescInput,
-                        bodyInput)
+                .createAndShowGUI(component, saveButton, titleInput, cardTitleInput, cardDescInput, bodyInput)
+                .fillGUI(titleInput, cardTitleInput, cardDescInput, bodyInput, editPageTitle, editCardTitle,
+                        editCardDesc, editPageBody)
                 .createBehaviour(saveButton, titleInput, bodyInput, cardTitleInput, cardDescInput, editPage.uid);
     }
 
-    private class EditLearningCardPageGUI {
+    public class EditLearningCardPageGUI {
         public EditLearningCardPageGUI() {
         }
 
-        private EditLearningCardPageGUI createAndShowGUI(String editPageTitle, String editPageBody,
-                String editCardDesc, String editCardTitle, JButton saveButton,
-
+        private EditLearningCardPageGUI createAndShowGUI(JPanel component, JButton saveButton,
                 JTextField titleInput, JTextField cardTitleInput, JTextArea cardDescInput, JTextArea bodyInput) {
 
-            titleInput.setText(editPageTitle);
-            bodyInput.setText(editPageBody);
-            cardTitleInput.setText(editCardTitle);
-            cardDescInput.setText(editCardDesc);
+            AddEditLearningPageGenericGUI.createAndShowGUI(component, saveButton, titleInput, cardTitleInput,
+                    cardDescInput, bodyInput);
 
-            component.setLayout(new GridBagLayout());
-            component.setBorder(BorderFactory.createEmptyBorder(10, 30, 30, 30));
-
-            var cTitleLabel = new GridBagConstraints();
-            cTitleLabel.anchor = GridBagConstraints.FIRST_LINE_START;
-            cTitleLabel.gridx = 0;
-            cTitleLabel.gridy = 0;
-            cTitleLabel.weighty = 0;
-            cTitleLabel.weightx = 0;
-
-            var cTitleInput = new GridBagConstraints();
-            cTitleInput.anchor = GridBagConstraints.FIRST_LINE_START;
-            cTitleInput.fill = GridBagConstraints.HORIZONTAL;
-            cTitleInput.gridx = 0;
-            cTitleInput.gridy = 1;
-            cTitleInput.weightx = 1;
-
-            var cCardTitleLabel = new GridBagConstraints();
-            cCardTitleLabel.anchor = GridBagConstraints.FIRST_LINE_START;
-            cCardTitleLabel.gridx = 0;
-            cCardTitleLabel.gridy = 2;
-
-            var cCardTitleInput = new GridBagConstraints();
-            cCardTitleInput.anchor = GridBagConstraints.FIRST_LINE_START;
-            cCardTitleInput.fill = GridBagConstraints.HORIZONTAL;
-            cCardTitleInput.gridx = 0;
-            cCardTitleInput.gridy = 3;
-
-            var cCardDescLabel = new GridBagConstraints();
-            cCardDescLabel.anchor = GridBagConstraints.FIRST_LINE_START;
-            cCardDescLabel.gridx = 0;
-            cCardDescLabel.gridy = 4;
-
-            var cCardDescInput = new GridBagConstraints();
-            cCardDescInput.anchor = GridBagConstraints.FIRST_LINE_START;
-            cCardDescInput.fill = GridBagConstraints.HORIZONTAL;
-            cCardDescInput.gridx = 0;
-            cCardDescInput.gridy = 5;
-            cCardDescInput.weighty = 0;
-            cardDescInput.setPreferredSize(new Dimension(100, 100));
-
-            var cBodyLabel = new GridBagConstraints();
-            cBodyLabel.anchor = GridBagConstraints.FIRST_LINE_START;
-            cBodyLabel.gridx = 0;
-            cBodyLabel.gridy = 6;
-
-            var cBodyInput = new GridBagConstraints();
-            cBodyInput.anchor = GridBagConstraints.FIRST_LINE_START;
-            cBodyInput.fill = GridBagConstraints.HORIZONTAL;
-            cBodyInput.gridx = 0;
-            cBodyInput.gridy = 7;
-            cBodyInput.weighty = 1;
-            bodyInput.setPreferredSize(new Dimension(200, 200));
-
-            component.add(new JLabel("Edit Title:"), cTitleLabel);
-            component.add(titleInput, cTitleInput);
-            component.add(new JLabel("Edit Card Title:"), cCardTitleLabel);
-            component.add(cardTitleInput, cCardTitleInput);
-            component.add(new JLabel("Edit Card Description:"), cCardDescLabel);
-            component.add(new JScrollPane(cardDescInput), cCardDescInput);
-            component.add(new JLabel("Edit Body:"), cBodyLabel);
-            component.add(new JScrollPane(bodyInput), cBodyInput);
-            component.add(saveButton);
             return this;
         }
 
-        private void createBehaviour(JButton saveButton, JTextField titleInput, JTextArea bodyInput, JTextField cardTitleInput, JTextArea cardDescInput, String uid) {
+        private EditLearningCardPageGUI fillGUI(JTextField titleInput, JTextField cardTitleInput,
+                JTextArea cardDescInput,
+                JTextArea bodyInput, String editPageTitle, String editCardTitle, String editCardDesc,
+                String editPageBody) {
+            titleInput.setText(editPageTitle);
+            cardTitleInput.setText(editCardTitle);
+            cardDescInput.setText(editCardDesc);
+            bodyInput.setText(editPageBody);
+
+            return this;
+        }
+
+        private void createBehaviour(JButton saveButton, JTextField titleInput, JTextArea bodyInput,
+                JTextField cardTitleInput, JTextArea cardDescInput, String uid) {
             saveButton.addActionListener((e) -> {
                 String newTitle = titleInput.getText();
                 String newBody = bodyInput.getText();
@@ -197,22 +143,93 @@ class EditLearningCardPage implements TabPage {
             }
         }
 
-        public JSONArray editJSON(JSONArray jsonArray, String targetUid, String newTitle, String newBody, String newCardTitle,
+        public JSONArray editJSON(JSONArray jsonArray, String targetUid, String newTitle, String newBody,
+                String newCardTitle,
                 String newCardDesc) {
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject obj = jsonArray.getJSONObject(i);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject obj = jsonArray.getJSONObject(i);
 
-                    if (obj.has("uid") && obj.getString("uid").equals(targetUid)) {
-                        obj.put("title", newTitle);
-                        obj.put("body", newBody);
-                        obj.getJSONObject("card").put("title", newCardTitle);
-                        obj.getJSONObject("card").put("desc", newCardDesc);
-                        jsonArray.put(i, obj);
-                        break;
-                    }
+                if (obj.has("uid") && obj.getString("uid").equals(targetUid)) {
+                    obj.put("title", newTitle);
+                    obj.put("body", newBody);
+                    obj.getJSONObject("card").put("title", newCardTitle);
+                    obj.getJSONObject("card").put("desc", newCardDesc);
+                    jsonArray.put(i, obj);
+                    break;
                 }
+            }
 
-                return jsonArray;
+            return jsonArray;
         }
+    }
+}
+
+class AddEditLearningPageGenericGUI {
+    public static void createAndShowGUI(JPanel component, JButton saveButton,
+            JTextField titleInput, JTextField cardTitleInput, JTextArea cardDescInput, JTextArea bodyInput) {
+
+        component.setLayout(new GridBagLayout());
+        component.setBorder(BorderFactory.createEmptyBorder(10, 30, 30, 30));
+
+        var cTitleLabel = new GridBagConstraints();
+        cTitleLabel.anchor = GridBagConstraints.FIRST_LINE_START;
+        cTitleLabel.gridx = 0;
+        cTitleLabel.gridy = 0;
+        cTitleLabel.weighty = 0;
+        cTitleLabel.weightx = 0;
+
+        var cTitleInput = new GridBagConstraints();
+        cTitleInput.anchor = GridBagConstraints.FIRST_LINE_START;
+        cTitleInput.fill = GridBagConstraints.HORIZONTAL;
+        cTitleInput.gridx = 0;
+        cTitleInput.gridy = 1;
+        cTitleInput.weightx = 1;
+
+        var cCardTitleLabel = new GridBagConstraints();
+        cCardTitleLabel.anchor = GridBagConstraints.FIRST_LINE_START;
+        cCardTitleLabel.gridx = 0;
+        cCardTitleLabel.gridy = 2;
+
+        var cCardTitleInput = new GridBagConstraints();
+        cCardTitleInput.anchor = GridBagConstraints.FIRST_LINE_START;
+        cCardTitleInput.fill = GridBagConstraints.HORIZONTAL;
+        cCardTitleInput.gridx = 0;
+        cCardTitleInput.gridy = 3;
+
+        var cCardDescLabel = new GridBagConstraints();
+        cCardDescLabel.anchor = GridBagConstraints.FIRST_LINE_START;
+        cCardDescLabel.gridx = 0;
+        cCardDescLabel.gridy = 4;
+
+        var cCardDescInput = new GridBagConstraints();
+        cCardDescInput.anchor = GridBagConstraints.FIRST_LINE_START;
+        cCardDescInput.fill = GridBagConstraints.HORIZONTAL;
+        cCardDescInput.gridx = 0;
+        cCardDescInput.gridy = 5;
+        cCardDescInput.weighty = 0;
+        cardDescInput.setPreferredSize(new Dimension(100, 100));
+
+        var cBodyLabel = new GridBagConstraints();
+        cBodyLabel.anchor = GridBagConstraints.FIRST_LINE_START;
+        cBodyLabel.gridx = 0;
+        cBodyLabel.gridy = 6;
+
+        var cBodyInput = new GridBagConstraints();
+        cBodyInput.anchor = GridBagConstraints.FIRST_LINE_START;
+        cBodyInput.fill = GridBagConstraints.HORIZONTAL;
+        cBodyInput.gridx = 0;
+        cBodyInput.gridy = 7;
+        cBodyInput.weighty = 1;
+        bodyInput.setPreferredSize(new Dimension(200, 200));
+
+        component.add(new JLabel("Add / Edit Title:"), cTitleLabel);
+        component.add(titleInput, cTitleInput);
+        component.add(new JLabel("Add / Edit Card Title:"), cCardTitleLabel);
+        component.add(cardTitleInput, cCardTitleInput);
+        component.add(new JLabel("Add / Edit Card Description:"), cCardDescLabel);
+        component.add(new JScrollPane(cardDescInput), cCardDescInput);
+        component.add(new JLabel("Add / Edit Body:"), cBodyLabel);
+        component.add(new JScrollPane(bodyInput), cBodyInput);
+        component.add(saveButton);
     }
 }

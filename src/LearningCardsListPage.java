@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -19,12 +20,15 @@ public class LearningCardsListPage implements TabPage {
     JPanel component = new JPanel();
 
     public LearningCardsListPage() {
+        var addCardButton = new JButton("Add Card");
+
         new LearningCardsListPageGUI()
-                .createAndShowGUI();
+                .createAndShowGUI(addCardButton)
+                .createBehaviour(addCardButton);
     }
 
     private class LearningCardsListPageGUI {
-        private void createAndShowGUI() {
+        private LearningCardsListPageGUI createAndShowGUI(JButton addCardButton) {
             component.setLayout(new GridBagLayout());
 
             final JLabel pageTitle = new JLabel("Learning Cards");
@@ -50,12 +54,24 @@ public class LearningCardsListPage implements TabPage {
             cLearningCards.gridy = 2;
             cLearningCards.weighty = 1;
 
+            var cAddCardButton = new GridBagConstraints();
+            cAddCardButton.anchor = GridBagConstraints.LAST_LINE_END;
+
             component.add(pageTitle, cTitle);
             component.add(pageDesc, cPageDesc);
             var learningCards = new LearningCards();
             component.add(learningCards.cardsContainer, cLearningCards);
+            component.add(addCardButton, cAddCardButton);
+
+            return this;
         }
 
+        private void createBehaviour(JButton addCardButton) {
+            addCardButton.addActionListener(e -> {
+                App.addTab("Add Card", null, new AddNewLearningCardPage().component, "add-learning-card-page",
+                        true);
+            });
+        }
     }
 
 }
@@ -84,7 +100,8 @@ class LearningCards {
     }
 
     private class LearningCardsGUI {
-        public static void createGUI(JPanel cardsContainer, String pageTitle, String pageBody, String cardTitle, String cardDesc,
+        public static void createGUI(JPanel cardsContainer, String pageTitle, String pageBody, String cardTitle,
+                String cardDesc,
                 String cardTooltip, String uid) {
 
             var learningCardPage = new LearningCardPage(pageTitle, pageBody, cardTitle, cardDesc,
