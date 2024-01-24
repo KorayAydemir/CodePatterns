@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import src.pages.LearningCardsListPage;
+
 public class EntryFrame {
     private static final JFrame frame = new JFrame("Hello, World!");
 

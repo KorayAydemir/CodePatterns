@@ -3,7 +3,7 @@
 PACKAGES = $(wildcard ./lib/*.jar)
 
 JAVAC_OPTS = -d ./build -cp $(PACKAGES)
-JAVAC_CLASSES = $(wildcard ./src/*.java ./src/components/*.java)
+JAVAC_CLASSES = $(wildcard ./src/*.java ./src/components/*.java ./src/pages/*.java)
 compile:
 	javac $(JAVAC_OPTS) $(JAVAC_CLASSES)
 

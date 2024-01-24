@@ -1,4 +1,4 @@
-package src;
+package src.pages;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;

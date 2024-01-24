@@ -1,4 +1,4 @@
-package src;
+package src.pages;
 
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -16,10 +16,11 @@ import javax.swing.JPanel;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import src.App;
 import src.components.LearningCard;
 
 public class LearningCardsListPage implements TabPage {
-    JPanel component = new JPanel();
+    public JPanel component = new JPanel();
 
     public LearningCardsListPage() {
         var addCardButton = new JButton("Add Card");

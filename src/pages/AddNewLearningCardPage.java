@@ -1,4 +1,4 @@
-package src;
+package src.pages;
 
 import java.io.IOException;
 
@@ -10,6 +10,9 @@ import javax.swing.SwingUtilities;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import src.App;
+import src.Utils;
 
 public class AddNewLearningCardPage {
     JPanel component = new JPanel();

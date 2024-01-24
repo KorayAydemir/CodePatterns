@@ -20,8 +20,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import src.App;
-import src.EditLearningCardPage;
-import src.LearningCardPage;
+import src.pages.EditLearningCardPage;
+import src.pages.LearningCardPage;
 
 public class LearningCard {
     public final JPanel component = new JPanel(new GridBagLayout());
