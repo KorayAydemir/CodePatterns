@@ -47,7 +47,7 @@ public class EntryFrame {
         private void createBehaviour(JButton startButton) {
             startButton.addActionListener((e) -> {
                 App.getInstance();
-                App.component.addTab("Learning Cards", new LearningCardsListPage().component);
+                App.addTab("Learning Cards", null, new LearningCardsListPage().component, "0", true);
                 frame.dispose();
             });
         }

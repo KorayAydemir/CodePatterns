@@ -11,7 +11,7 @@ import javax.swing.SwingUtilities;
 public class App {
     private static App single_instance = null;
 
-    private static final JFrame frame = new JFrame("Hello, World!");
+    public static final JFrame frame = new JFrame("Hello, World!");
     public static final JTabbedPane component = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
 
     private App() {

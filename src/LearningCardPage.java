@@ -3,7 +3,11 @@ package src;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
+import javax.sound.sampled.Control.Type;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -12,6 +16,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 public class LearningCardPage implements TabPage {
     public JPanel component = new JPanel();
@@ -19,7 +28,8 @@ public class LearningCardPage implements TabPage {
     public String body;
     public String uid;
 
-    public LearningCardPage(String title, String body, String cardTitle, String cardDesc, String cardTooltip, String uid) {
+    public LearningCardPage(String title, String body, String cardTitle, String cardDesc, String cardTooltip,
+            String uid) {
         createAndShowGUI(title, body);
         this.title = title;
         this.body = body;
@@ -35,7 +45,6 @@ public class LearningCardPage implements TabPage {
     }
 }
 
-
 class EditLearningCardPage implements TabPage {
     public JPanel component = new JPanel();
 
@@ -46,16 +55,20 @@ class EditLearningCardPage implements TabPage {
         JButton saveButton = new JButton("Save");
         JTextField titleInput = new JTextField();
         JTextArea bodyInput = new JTextArea();
+        JTextField cardTitleInput = new JTextField();
+        JTextArea cardDescInput = new JTextArea();
 
         new EditLearningCardPageGUI()
-            .createAndShowGUI(editPageTitle, editPageBody, saveButton, titleInput, bodyInput)
-            .createBehaviour(saveButton, titleInput, bodyInput, editPage.uid);
+                .createAndShowGUI(editPageTitle, editPageBody, saveButton, titleInput, cardTitleInput, cardDescInput, bodyInput)
+                .createBehaviour(saveButton, titleInput, bodyInput, editPage.uid);
     }
 
     private class EditLearningCardPageGUI {
-        public EditLearningCardPageGUI() {}
+        public EditLearningCardPageGUI() {
+        }
 
-        private EditLearningCardPageGUI createAndShowGUI(String editPageTitle, String editPageBody, JButton saveButton, JTextField titleInput, JTextArea bodyInput) {
+        private EditLearningCardPageGUI createAndShowGUI(String editPageTitle, String editPageBody, JButton saveButton,
+                JTextField titleInput, JTextField cardTitleInput, JTextArea cardDescInput, JTextArea bodyInput) {
 
             titleInput.setText(editPageTitle);
             bodyInput.setText(editPageBody);
@@ -77,21 +90,49 @@ class EditLearningCardPage implements TabPage {
             cTitleInput.gridy = 1;
             cTitleInput.weightx = 1;
 
+            var cCardTitleLabel = new GridBagConstraints();
+            cCardTitleLabel.anchor = GridBagConstraints.FIRST_LINE_START;
+            cCardTitleLabel.gridx = 0;
+            cCardTitleLabel.gridy = 2;
+
+            var cCardTitleInput = new GridBagConstraints();
+            cCardTitleInput.anchor = GridBagConstraints.FIRST_LINE_START;
+            cCardTitleInput.fill = GridBagConstraints.HORIZONTAL;
+            cCardTitleInput.gridx = 0;
+            cCardTitleInput.gridy = 3;
+
+            var cCardDescLabel = new GridBagConstraints();
+            cCardDescLabel.anchor = GridBagConstraints.FIRST_LINE_START;
+            cCardDescLabel.gridx = 0;
+            cCardDescLabel.gridy = 4;
+
+            var cCardDescInput = new GridBagConstraints();
+            cCardDescInput.anchor = GridBagConstraints.FIRST_LINE_START;
+            cCardDescInput.fill = GridBagConstraints.HORIZONTAL;
+            cCardDescInput.gridx = 0;
+            cCardDescInput.gridy = 5;
+            cCardDescInput.weighty = 0;
+            cardDescInput.setPreferredSize(new Dimension(100, 100));
+
             var cBodyLabel = new GridBagConstraints();
             cBodyLabel.anchor = GridBagConstraints.FIRST_LINE_START;
             cBodyLabel.gridx = 0;
-            cBodyLabel.gridy = 2;
+            cBodyLabel.gridy = 6;
 
             var cBodyInput = new GridBagConstraints();
             cBodyInput.anchor = GridBagConstraints.FIRST_LINE_START;
             cBodyInput.fill = GridBagConstraints.HORIZONTAL;
             cBodyInput.gridx = 0;
-            cBodyInput.gridy = 3;
+            cBodyInput.gridy = 7;
             cBodyInput.weighty = 1;
             bodyInput.setPreferredSize(new Dimension(200, 200));
 
             component.add(new JLabel("Edit Title:"), cTitleLabel);
             component.add(titleInput, cTitleInput);
+            component.add(new JLabel("Edit Card Title:"), cCardTitleLabel);
+            component.add(cardTitleInput, cCardTitleInput);
+            component.add(new JLabel("Edit Card Description:"), cCardDescLabel);
+            component.add(new JScrollPane(cardDescInput), cCardDescInput);
             component.add(new JLabel("Edit Body:"), cBodyLabel);
             component.add(new JScrollPane(bodyInput), cBodyInput);
             component.add(saveButton);
@@ -102,11 +143,61 @@ class EditLearningCardPage implements TabPage {
             saveButton.addActionListener((e) -> {
                 String newTitle = titleInput.getText();
                 String newBody = bodyInput.getText();
+                String newCardTitle = titleInput.getText();
+                String newCardDesc = bodyInput.getText();
 
                 LearningCardPage page = new LearningCardPage(newTitle, newBody, newTitle, newBody, "", uid);
                 App.closeSelectedTab();
                 App.addTab(newTitle, null, page.component, "", true);
+
+                editJSON(uid, newTitle, newBody, newCardTitle, newCardDesc);
             });
         }
+
+        public void editJSON(String targetUid, String newTitle, String newBody, String newCardTitle, String newCardDesc) {
+            try {
+                String filePath = "src/data/LearningPages.json";
+                JSONArray jsonArray = readJsonFile(filePath);
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject obj = jsonArray.getJSONObject(i);
+
+                    if (obj.has("uid") && obj.getString("uid").equals(targetUid)) {
+                        obj.put("title", newTitle);
+                        obj.put("body", newBody);
+                        obj.getJSONObject("card").put("title", newTitle);
+                        obj.getJSONObject("card").put("desc", newBody);
+                        jsonArray.put(i, obj);
+                        break;
+                    }
+                }
+
+                try {
+                    writeJsonFile(filePath, jsonArray);
+                } catch (IOException e) {
+                    System.out.println("Error writing to file: " + e);
+                    e.printStackTrace();
+                } finally  {
+                    SwingUtilities.invokeLater(() -> {
+                        App.component.setComponentAt(0, new LearningCardsListPage().component);
+                    });
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        private static JSONArray readJsonFile(String filePath) throws IOException {
+            FileReader fileReader = new FileReader(filePath);
+            JSONTokener jsonTokener = new JSONTokener(fileReader);
+            return new JSONArray(jsonTokener);
+        }
+
+        private static void writeJsonFile(String filePath, JSONArray jsonArray) throws IOException {
+            try (FileWriter fileWriter = new FileWriter(filePath)) {
+                fileWriter.write(jsonArray.toString(4)); // The '4' is the number of spaces to use for indentation
+            }
+        }
+
     }
 }
